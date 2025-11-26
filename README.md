@@ -61,4 +61,33 @@ Binary Classification
 ### Вариант A — One-Hot Encoding (как в ноутбуке Kaggle)
 ```python
 df = pd.get_dummies(df, columns=['Gender'])
+```
+### Вариант B — Бинарное кодирование
+```python
+df['Gender'] = df['Gender'].replace({'M': 0, 'F': 1, 'f': 1})
+```
+### Удаление лишних колонок
+```python
+if 'Unnamed: 0' in df.columns:
+    df = df.drop(columns=['Unnamed: 0'])
+```
+### Предсказание
+```python
+import joblib
+import pandas as pd
 
+model = joblib.load("heart_disease_model.joblib")
+
+prediction = model.predict(df[cols])        # 0 или 1
+proba = model.predict_proba(df[cols])[:, 1] # вероятность
+```
+📊 Интерпретация результатов
+
+prediction = 1 → высокий риск
+
+prediction = 0 → низкий риск
+
+### 📦 Установка
+```
+git clone https://github.com/AntonMininVIT/health-test-by-blood-dataset.git
+```
